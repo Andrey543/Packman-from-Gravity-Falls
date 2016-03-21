@@ -530,10 +530,10 @@ if __name__=='__main__':
                 CameOver_screen_rect=Rect(0,0,feild_size_x,feild_size_y)
                 screen.blit(pygame.image.load('./resources/WINNER.png'),(CameOver_screen_rect.x,CameOver_screen_rect.y))
                 win.play()
+            sound.stop()
             pygame.display.flip()
             pygame.time.delay(5000)
             process_events(pygame.event.get())
-            sound.stop()
             sys.exit(0)
             
             
