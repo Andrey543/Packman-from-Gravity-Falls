@@ -7,7 +7,6 @@ import random
 
 
 
-
 def init_window():
     pygame.init()
     pygame.display.set_mode((cell_size*feild_size_x,cell_size*feild_size_y))
