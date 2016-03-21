@@ -440,6 +440,12 @@ def process_events(events):
 
 if __name__=='__main__':
     
+    pygame.mixer.pre_init(44100, 16, 2, 4096) #frequency, size, channels, buffersize
+    pygame.init()
+    sound=pygame.mixer.Sound('./resources/music.wav')
+    sound.play(loops=100)
+    loser=pygame.mixer.Sound('./resources/Loser.wav')
+    win=pygame.mixer.Sound('./resources/win.wav')
     cell_size=50    
     feild_size_x=38
     feild_size_y=20
@@ -518,13 +524,16 @@ if __name__=='__main__':
         if sovp:
             if k>0:
                 CameOver_screen_rect=Rect(50,200,feild_size_x,feild_size_y)
-                screen.blit(pygame.image.load('./resources/WASTED.png'),(CameOver_screen_rect.x,CameOver_screen_rect.y))            
+                screen.blit(pygame.image.load('./resources/WASTED.png'),(CameOver_screen_rect.x,CameOver_screen_rect.y))
+                loser.play()
             else:
                 CameOver_screen_rect=Rect(0,0,feild_size_x,feild_size_y)
                 screen.blit(pygame.image.load('./resources/WINNER.png'),(CameOver_screen_rect.x,CameOver_screen_rect.y))
+                win.play()
             pygame.display.flip()
             pygame.time.delay(5000)
             process_events(pygame.event.get())
+            sound.stop()
             sys.exit(0)
             
             
