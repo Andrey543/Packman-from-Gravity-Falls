@@ -17,6 +17,7 @@ def init_window():
 
 
 def draw_background(screen, image=None):
+    
     if image:
         screen.blit(image,(0,0))
     else:
@@ -28,9 +29,8 @@ def draw_background(screen, image=None):
         
         
 class GameObject(pygame.sprite.Sprite):
-
-
-
+    
+    
     # x,y - координаты персонажа на поле.
     # self.feild_x,self.field_y - координаты персонажа непосредственно на поле
     # self.image - изображение персонажа
@@ -38,8 +38,7 @@ class GameObject(pygame.sprite.Sprite):
     # self.feild_size_x - размер игрового поля(в клетках) по вертикали
     # self.cell_size - размер одной клетки(в пикселях, клетка квадратная)
     # self.tick - время жизни персонажа в условных внутриигровых единицах
-
-
+    
 
     def __init__(self,x,y,feild_size_x,feild_size_y,cell_size):
     
@@ -51,32 +50,38 @@ class GameObject(pygame.sprite.Sprite):
         self.cell_size=cell_size
         self.tick=0
         self.set_coord(x,y)
-
+        
 
     def set_coord(self,x,y):
+        
         self.x=x
         self.y=y
         self.screen_rect=Rect(floor(x)*self.cell_size,floor(y)*self.cell_size,self.feild_size_x,self.feild_size_y)
 
+
     def game_tick(self):
+        
         self.tick+=1
+        
 
     def draw(self,screen,image):
+        
         screen.blit(image,(self.screen_rect.x,self.screen_rect.y))
-
-
 
 
 
 
 class Ghost(GameObject):
     
+    
     def __init__(self,x,y,image,feild_size_x,feild_size_y,cell_size):
+        
         GameObject.__init__(self,x,y,feild_size_x,feild_size_y,cell_size)
         self.image=image
         self.image_with_direction=image['right']
         self.direction=None
         self.speed=4.0/10.0
+        
     
     def game_tick(self):
     
@@ -117,18 +122,20 @@ class Ghost(GameObject):
         
         
         
+        
 def is_wall(x,y):
         if map.get(floor(x),floor(y))=='W' or map.get(floor(x),floor(y))=='B':
             return True
         return False
     
-    
         
         
         
 class CleverGhost(Ghost):
+    
 
     def __init__(self,x,y,image,image_for_packman,feild_size_x,feild_size_y,cell_size):
+        
         Ghost.__init__(self,x,y,image,feild_size_x,feild_size_y,cell_size)  
         self.image=image
         self.image_for_packman=image_for_packman
@@ -140,10 +147,10 @@ class CleverGhost(Ghost):
         self.run_for_packman_coord_y=[]
         self.image_direction_of_packman=[]
         self.running_time=0
-    
            
         
     def check_flag(self):
+        
         if self.flag=='free':
             if self.direction=='up':                
                 if floor(self.y)-7<=floor(packman.y) and floor(packman.y)<=floor(self.y) and floor(self.x)==floor(packman.x):
@@ -283,31 +290,26 @@ class CleverGhost(Ghost):
             
         
     def game_tick(self): 
+        
         self.check_flag()   
         if self.flag=='free':
             Ghost.game_tick(self)
         else:
-            
             self.run_for_packman_coord_x.append(packman.x)
             self.run_for_packman_coord_y.append(packman.y)
             self.image_direction_of_packman.append(packman.direction)
             self.set_coord(self.run_for_packman_coord_x[self.running_time],self.run_for_packman_coord_y[self.running_time])
             self.image_with_direction=self.image_for_packman[self.image_direction_of_packman[self.running_time]]
             self.running_time+=1
-            
-            
-            
-            
-            
-            
-                             
                 
                 
                 
                 
 class Packman(GameObject):
     
+    
     def __init__(self,x,y,image,feild_size_x,feild_size_y,cell_size):
+        
         GameObject.__init__(self,x,y,feild_size_x,feild_size_y,cell_size)
         self.image=image
         self.direction='stop'
@@ -361,6 +363,7 @@ class Packman(GameObject):
 
 class Map():
     
+    
     def __init__(self,feild_size_x,feild_size_y,mapfile):
         
         self.map=[['']*feild_size_x for i in range(feild_size_y)]
@@ -375,35 +378,47 @@ class Map():
             
         
     def get(self,x,y):
+        
         return self.map[y][x]
+
 
 
 
 class Wall(GameObject):
     
+    
     def __init__(self,x,y,image,feild_size_x,feild_size_y,cell_size):
+        
         GameObject.__init__(self,x,y,feild_size_x,feild_size_y,cell_size)
         self.image=pygame.image.load(image) 
            
+           
+           
+           
 class Boom_Wall(GameObject):
     
+    
     def __init__(self,x,y,image,feild_size_x,feild_size_y,cell_size):
+        
         GameObject.__init__(self,x,y,feild_size_x,feild_size_y,cell_size)
         self.image=pygame.image.load(image)
 
 
 
+
 class Food(GameObject):
+    
 
     def __init__(self,x,y,image,feild_size_x,feild_size_y,cell_size):
+        
         GameObject.__init__(self,x,y,feild_size_x,feild_size_y,cell_size)
         self.image=pygame.image.load(image)
     
         
 
 
-
 def process_events(events):
+    
     
     for event in events:
         if (event.type==QUIT) or (event.type==KEYDOWN and event.key==K_ESCAPE):
@@ -419,6 +434,7 @@ def process_events(events):
                 packman.direction='left'
             elif event.key==K_SPACE:
                 packman.direction='stop'
+
 
 
 
@@ -483,17 +499,23 @@ if __name__=='__main__':
     background=pygame.image.load('./resources/background.png')
     screen=pygame.display.get_surface()
     k=len(food)
+    
     while 1:
+        
+        
         print(k)
         sovp=False
+        
         for i in range(len(ghost)):
             if (floor(packman.x)==floor(ghost[i].x) and floor(packman.y)==floor(ghost[i].y)) or k<=0:
                 sovp=True
                 break
+            
         for i in range(len(clever_ghost)):
             if (floor(packman.x)==floor(clever_ghost[i].x) and floor(packman.y)==floor(clever_ghost[i].y)):
                 sovp=True
                 break
+            
         if sovp:
             if k>0:
                 CameOver_screen_rect=Rect(50,200,feild_size_x,feild_size_y)
@@ -505,6 +527,8 @@ if __name__=='__main__':
             pygame.time.delay(5000)
             process_events(pygame.event.get())
             sys.exit(0)
+            
+            
         else:
             
                         
@@ -521,27 +545,39 @@ if __name__=='__main__':
             process_events(pygame.event.get())
             pygame.time.delay(100)
             packman.game_tick()
+            
             for i in range(len(ghost)):
                 ghost[i].game_tick()
+                
             for i in range(len(clever_ghost)):
                 clever_ghost[i].game_tick()
+                
             for i in range(len(wall)):
                 wall[i].game_tick()   
+                
             for i in range(len(boom_wall)):
                 boom_wall[i].game_tick()   
+                
             for i in range(len(food)):
-                food[i].game_tick()           
+                food[i].game_tick()     
+                
             draw_background(screen,background)
+            
             for i in range(len(wall)):
                 wall[i].draw(screen,wall[i].image)
+                
             for i in range(len(boom_wall)):
                 boom_wall[i].draw(screen,boom_wall[i].image)
+                
             for i in range(len(food)):
                 food[i].draw(screen,food[i].image)
+                
             for i in range(len(ghost)):
                 ghost[i].draw(screen,ghost[i].image_with_direction)
+                
             for i in range(len(clever_ghost)):
                 clever_ghost[i].draw(screen,clever_ghost[i].image_with_direction)
+                
             packman.draw(screen,packman.image_with_direction)
             pygame.display.flip()
 
