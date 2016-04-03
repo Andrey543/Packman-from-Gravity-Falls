@@ -458,7 +458,6 @@ def menu():
     image_map_bill=map_bill_image
     
     while flag=='work':
-        print('Fuck you')
         draw_background(screen,background)
         screen.blit(menu_image,(menu.x,menu.y))
         screen.blit(image_play,(play.x,play.y))
