@@ -471,13 +471,10 @@ def menu():
                 sys.exit(0)
             if event.type==KEYDOWN: 
                if event.key==K_DOWN:
-                   print('io',k)
                    k+=1
                if event.key==K_UP:
                    k-=1
-                   print('ioi',k)
                if k%3==1:
-                   print('fdsfads')
                    image_play=play_image_pressed
                    image_choose=choose_the_map_image
                    image_quit=quit_image
@@ -633,7 +630,6 @@ if __name__=='__main__':
     screen=pygame.display.get_surface()
     k=len(food)
     while 1:
-        print(k)
         sovp=False
         for i in range(len(ghost)):
             if (floor(packman.x)==floor(ghost[i].x) and floor(packman.y)==floor(ghost[i].y)) or k<=0:
